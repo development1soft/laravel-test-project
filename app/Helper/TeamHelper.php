@@ -44,10 +44,10 @@ class TeamHelper
         $date = Carbon::now();
         $week = 0;
 
-        self::loopTrowTeam($dataCollection,$collectReferees,$teams,$totalTeams,$mid,$date,$week,'home');
+        self::loopThroughTeam($dataCollection,$collectReferees,$teams,$totalTeams,$mid,$date,$week,'home');
         // week of a way will start after mid week
         $week = $mid;
-        self::loopTrowTeam($dataCollection,$collectReferees,$teams,$totalTeams,$mid,$date,$week,'away');
+        self::loopThroughTeam($dataCollection,$collectReferees,$teams,$totalTeams,$mid,$date,$week,'away');
 
         return $dataCollection;
     }
@@ -70,14 +70,14 @@ class TeamHelper
         return $totalMatches;
     }
 
-    private static function loopTrowTeam($dataCollection,$collectReferees,$teams,$totalTeams,$mid,$date,$week,$round) : void
+    private static function loopThroughTeam($dataCollection, $collectReferees, $teams, $totalTeams, $mid, $date, $week, $round) : void
     {
 
 
         for ($teamIndex = 0; $teamIndex < $totalTeams - 1; $teamIndex++) {
-            // indcrement week if the loop is even
+            // increment week if the loop is even
             if ($teamIndex % 2 == 0) {
-                $date = $date->addDays(7 ); // ensure the date is calculated correctly
+                $date = $date->addDays(7);
 
                 $week++;
             }
@@ -105,6 +105,7 @@ class TeamHelper
 
                 }
             }
+            // Rotate the array
             $teams = array_merge([$teams[0]], array_slice($teams, -1), array_slice($teams, 1, -1));
         }
     }
