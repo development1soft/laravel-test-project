@@ -39,7 +39,7 @@ class CreateTeams extends Command
             $this->error($data);
             return;
         }
-        $this->table(['Week Number', 'Team 1 (home)', 'Team 2 (Away)', 'Referee', 'Date'], $data);
+        $this->table(['Week Number', 'Team 1 (home)', 'Team 2 (Away)', 'Referee', 'Date','round'], $data);
 
     }
 }

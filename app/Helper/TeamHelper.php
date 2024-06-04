@@ -126,6 +126,7 @@ class TeamHelper
                         'teamName2' => ($round == 'home') ? $team2->teamName : $team1->teamName ,
                         'refereeName' => $refereeName ,
                         'date' => $date ,
+                        'round' => $round ,
                     ]);
 
                 }
