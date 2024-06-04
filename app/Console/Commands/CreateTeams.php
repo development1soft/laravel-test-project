@@ -12,14 +12,14 @@ class CreateTeams extends Command
      *
      * @var string
      */
-    protected $signature = 'create:teams {n}';
+    protected $signature = 'create:teams {n} {m}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'The command will create teams for the league and generate a plan for the week plays the teams. n is the number of teams. Default is 6.';
+    protected $description = 'The command will create teams for the league and generate a plan for the week plays the teams. n is the number of teams.';
 
     /**
      * Execute the console command.
@@ -31,11 +31,15 @@ class CreateTeams extends Command
             return;
         }
         $numberOfTeam  = $this->argument('n') ?? 6;
-        $teams = TeamHelper::createTeamForLeg($numberOfTeam);
+        $numberOfReferee = $this->argument('m') ?? 4;
 
-        $data = TeamHelper::generatePlanForWeeklyGames($teams);
-
-        $this->table(['Week Number', 'Team 1 (home)', 'Team 2 (Away)', 'Referee', 'Date', 'Round'], $data);
+        $teams = new TeamHelper($numberOfTeam, $numberOfReferee);
+        $data = $teams->generatePlanForWeeklyGames();
+        if (is_string($data)) {
+            $this->error($data);
+            return;
+        }
+        $this->table(['Week Number', 'Team 1 (home)', 'Team 2 (Away)', 'Referee', 'Date'], $data);
 
     }
 }
